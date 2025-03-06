@@ -1,24 +1,21 @@
 // Create a web server
-// 1. Create a web server
-// 2. Handle GET requests with a path '/comments'
-// 3. Return a list of comments in JSON format
+// Create a web server
+const express = require('express')
+const app = express()
+const port = 3000
 
-const http = require('http');
+// Set the template engine
+app.set('view engine', 'pug')
 
-const server = http.createServer((req, res) => {
-  if (req.method === 'GET' && req.url === '/comments') {
-    const comments = [
-      { name: 'John', comment: 'Hello' },
-      { name: 'Jane', comment: 'Hi' }
-    ];
-    res.setHeader('Content-Type', 'application/json');
-    res.end(JSON.stringify(comments));
-  } else {
-    res.statusCode = 404;
-    res.end('Not found');
-  }
-});
+// Set the path for the static files
+app.use(express.static('public'))
 
-server.listen(3000, () => {
-  console.log('Server is running on http://localhost:3000');
-});
+// Create a route
+app.get('/', (req, res) => {
+  res.render('index')
+})
+
+// Start and listen on the server
+app.listen(port, () => {
+  console.log(`The server is running on http://localhost:${port}`)
+})
